@@ -52,12 +52,18 @@ class Account(Base):
     def format_balance(self):
         return float(self.balance)/100
 
-    def withdrawl(self, amount):
-        self.balance = self.balance - (amount * 100)
+    def withdrawal(self, amount):
+        if self.balance == None:
+            self.balance = amount * -100
+        else:
+            self.balance = self.balance - (amount * 100)
         return self.format_balance()
 
     def deposit(self, amount):
-        self.balance = self.balance + (amount * 100)
+        if self.balance == None:
+            self.balance = amount * 100
+        else:
+            self.balance = self.balance + (amount * 100)
         return self.format_balance()
 
 
@@ -86,7 +92,7 @@ def print_menu():
     print('| 1 - List Customers                 |')
     print('| 2 - Set Current Customer           |')
     print('| 3 - Deposit                        |')
-    print('| 4 - Withdrawl                      |')
+    print('| 4 - Withdrawal                      |')
     print('|____________________________________|')
 
 
@@ -102,6 +108,18 @@ def main():
                 print(f'{instance.id} {instance.full_name()}')
         if choice == '2':
             current_customer = input('Enter customer id: ')
+            # session.query(Account).filter_by(id=int(current_customer)).first()
+            current_account = Account(id=int(current_customer))
+        if choice == '3':
+            amount = input('Enter deposit amount: ')
+            new_balance = current_account.deposit(float(amount))
+            print(f'New Balance: {new_balance}')
+        if choice == '4':
+            amount = input('Enter withdrawal amount: ')
+            new_balance = current_account.withdrawal(float(amount))
+            print(f'New Balance: {new_balance}')
+
+    session.commit()
     session.close()
 
 
