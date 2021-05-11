@@ -92,7 +92,7 @@ def print_menu():
     print('| 1 - List Customers                 |')
     print('| 2 - Set Current Customer           |')
     print('| 3 - Deposit                        |')
-    print('| 4 - Withdrawal                      |')
+    print('| 4 - Withdrawal                     |')
     print('|____________________________________|')
 
 
